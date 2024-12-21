@@ -1,0 +1,81 @@
+# Promptus: Can Prompts Streaming Replace Video Streaming with Stable Diffusion
+
+This is the official implementation of Promptus, which represents real-world videos with a series of "prompts" for delivery and employs Stable Diffusion to generate pixel-aligned videos at the receiver.
+
+![teaser1](docs/imgs/main_pic.png)
+
+## Inversion
+### (0) Getting Started
+Clone this repository, enter the `'Promptus'` folder and create local environment:
+```bash
+$ conda env create -f environment.yml
+```
+### (1) Stable Diffusion Model
+Download the official SD Turbo model `'sd_turbo.safetensors'` from [here](https://huggingface.co/stabilityai/sd-turbo/tree/main), and place it in the `'checkpoints'` folder.
+### (2) Data preparation
+As a demo, we provide two example videos (`'sky'` and `'uvg'`) in the `'data'` folder, which you can test directly. 
+
+You can also use your own videos, as long as they are organized in the same format as the example above.
+### (3) Training (Inversion)
+```bash
+$ python inversion.py -frame_path "data/sky" -max_id 140 -rank 8 -interval 10
+```
+
+Where `'-frame_path'` refers to the video folder, `'-max_id'` is the largest frame index. `'-rank'` and `'-interval'` together determines the target bitrate (Please refer to the paper for details).
+
+As an example, the inverse prompts are saved in the `'data/sky/results/rank8_interval10'` folder.
+
+### (4) Testing (Generation)
+
+After training, you can generate videos from the inverse prompts. For example:
+```bash
+$ python generation.py -frame_path "data/sky" -rank 8 -interval 10
+```
+the generated frames are saved in the `'data/sky/results/rank8_interval10'` folder.
+
+We provide pre-trained prompts (in 225 kbps) for `'sky'` and `'uvg'` examples, allowing you to generate directly without training.
+
+
+## Real-time Demo
+### (0) Getting real-time engines
+
+We release the real-time generation engines. Please download the engines from [here](https://drive.google.com/drive/folders/1w-SWduvQ5ZZKLokae1rBXAKG10YGMQzF?usp=sharing), and place the `'denoise_batch_10.engine'` and `'decoder_batch_10.engine'` in the `'engine'` folder.
+
+### (1) Real-time generating
+We provide pre-trained prompts (in 225 kbps) for `'sky'` and `'uvg'` examples, allowing you to generate directly without training.
+For example:
+```bash
+$ python realtime_demo.py -prompt_dir "data/sky/results/rank8_interval10" -batch 10 -visualize True
+```
+the generated frames are saved in the `'data/sky/results/rank8_interval10'` folder.
+
+You can also train your own videos as described above and use the generation engines for real-time generation.
+
+On a single NVIDIA GeForce 4090D, the generation speed reaches 170 FPS.
+
+*To start, it is recommended to run the Real-time Demo with the pre-trained prompts, as it is the simplest way to experience Promptus.
+
+*The inversion code will be open-sourced after publication. If needed, please apply via email at `jiangkai.wu@stu.pku.edu.cn`. We welcome collaboration : )
+
+## Acknowledgement
+Promptus is built based on these repositories:
+
+[pytorch-quantization-demo](https://github.com/Jermmy/pytorch-quantization-demo) ![GitHub stars](https://img.shields.io/github/stars/Jermmy/pytorch-quantization-demo.svg?style=flat&label=Star)
+
+[generative-models](https://github.com/Stability-AI/generative-models) ![GitHub stars](https://img.shields.io/github/stars/Stability-AI/generative-models.svg?style=flat&label=Star)
+
+[StreamDiffusion](https://github.com/cumulo-autumn/StreamDiffusion) ![GitHub stars](https://img.shields.io/github/stars/cumulo-autumn/StreamDiffusion.svg?style=flat&label=Star)
+
+[DiffDVR](https://github.com/shamanDevel/DiffDVR) ![GitHub stars](https://img.shields.io/github/stars/shamanDevel/DiffDVR.svg?style=flat&label=Star)
+
+[taesd](https://github.com/madebyollin/taesd) ![GitHub stars](https://img.shields.io/github/stars/madebyollin/taesd.svg?style=flat&label=Star)
+
+## Citation
+```
+@article{wu2024promptus,
+  title={Promptus: Can Prompts Streaming Replace Video Streaming with Stable Diffusion},
+  author={Wu, Jiangkai and Liu, Liming and Tan, Yunpeng and Hao, Junlin and Zhang, Xinggong},
+  journal={arXiv preprint arXiv:2405.20032},
+  year={2024}
+}
+```
