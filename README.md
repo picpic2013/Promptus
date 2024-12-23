@@ -5,8 +5,8 @@ This is the official implementation of the paper [Promptus: Can Prompts Streamin
 ![teaser1](docs/imgs/main_pic.png)
 
 <div style="text-align: center;">
-  <h3>The original video &nbsp;&nbsp;<strong>vs</strong> &nbsp;&nbsp;The generated video from prompt </h3>
   <img src="docs/imgs/sky_demo.gif" width="1024">
+  <p><strong>The original video &nbsp;&nbsp;vs &nbsp;&nbsp;The video generated from inverse prompts</strong></p>
 </div>
 
 ## Inversion
@@ -59,8 +59,8 @@ You can also train your own videos as described above and use the generation eng
 On a single NVIDIA GeForce 4090D, the generation speed reaches 170 FPS. The following video shows an example:
 
 <div style="text-align: center;">
-  <h3>Real-time Demo</h3>
   <img src="docs/imgs/Real-time.gif" width="960">
+  <strong><p>Real-time Demo</strong></p>
 </div>
 
 ## Integrated into browsers and video streaming platforms
@@ -77,8 +77,8 @@ At the client, the received prompts are forwarded to the Promptus process. Withi
 The following video shows an example:
 
 <div style="text-align: center;">
-  <h3>Promptus in Browser-side Video Streaming</h3>
   <img src="docs/imgs/Browser.gif" width="960">
+  <strong><p>Promptus in Browser-side Video Streaming</strong></p>
 </div>
 
 &nbsp;
