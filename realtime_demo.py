@@ -125,8 +125,8 @@ if __name__ == '__main__':
         # interpolation interval
         interval = id_next - id_curr
 
-        prompt_curr = torch.load(prompt_curr)
-        prompt_next = torch.load(prompt_next)
+        prompt_curr = torch.load(prompt_curr, weights_only=True)
+        prompt_next = torch.load(prompt_next, weights_only=True)
         # low-rank factors
         U_curr, V_curr, U_next, V_next = prompt_curr['U'], prompt_curr['V'], prompt_next['U'], prompt_next['V']
 
@@ -165,7 +165,7 @@ if __name__ == '__main__':
         # generating frames from prompts
         if Generator_RT.prev_frame is None:
             # initialize for the first frame
-            Generator_RT.prev_frame = torch.load(os.path.join(prompt_dir, 'init.pth'))
+            Generator_RT.prev_frame = torch.load(os.path.join(prompt_dir, 'init.pth'), weights_only=True)
             c0 = (U_curr @ V_curr / np.sqrt(rank)).unsqueeze(dim=0)
             images = Generator_RT.generate(c0)
             images = Generator_RT.normalization(images, to_numpy=True)

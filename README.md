@@ -14,6 +14,36 @@ This is the official implementation of the paper [Promptus: Can Prompts Streamin
 Clone this repository, enter the `'Promptus'` folder and create local environment:
 ```bash
 $ conda env create -f environment.yml
+$ conda activate promptus
+```
+Alternatively, you can also configure the environment manually as follows:
+```bash
+$ conda create -n promptus
+$ conda activate promptus
+$ conda install python=3.10.14
+$ conda install pytorch=2.5.1 torchvision pytorch-cuda=12.1 -c pytorch -c nvidia
+$ pip install tensorrt==10.7.0
+$ pip install tensorrt-cu12-bindings==10.7.0
+$ pip install tensorrt-cu12-libs==10.7.0
+$ pip install diffusers==0.26.1
+$ pip install opencv-python==4.10.0.84
+$ pip install polygraphy==0.49.9
+$ conda install onnx=1.17.0
+$ pip install onnx_graphsurgeon==0.5.2
+$ pip install cuda-python==12.6.2.post1
+# At this point, the environment is ready to run the real-time demo.
+$ pip install torchmetrics==1.3.0.post0
+$ pip install huggingface_hub==0.25.0
+$ pip install streamlit==1.31.0
+$ pip install einops==0.7.0
+$ pip install invisible-watermark
+$ pip install omegaconf==2.3.
+$ pip install pytorch-lightning==2.0.1
+$ pip install kornia==0.6.9
+$ pip install open-clip-torch==2.24.0
+$ pip install transformers==4.37.2
+$ pip install openai-clip==1.0.1
+$ pip install scipy==1.12.0
 ```
 ### (1) Stable Diffusion Model
 Download the official SD Turbo model `'sd_turbo.safetensors'` from [here](https://huggingface.co/stabilityai/sd-turbo/tree/main), and place it in the `'checkpoints'` folder.
