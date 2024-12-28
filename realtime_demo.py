@@ -6,6 +6,7 @@ import os
 import re
 import glob
 import argparse
+from cuda import cudart
 from quantization import QParam
 from polygraphy import cuda
 from tensorrt_acceleration import Engine
@@ -28,8 +29,40 @@ class Generator():
         self.decoder_engine = None
         self.denoise_engine_load()
         self.decoder_engine_load()
+
+    def build_engine(self, input_profile, onnx_path, engine_path):
+        _, free_mem, _ = cudart.cudaMemGetInfo()
+        GiB = 2 ** 30
+        if free_mem > 6 * GiB:
+            activation_carveout = 4 * GiB
+            max_workspace_size = free_mem - activation_carveout
+        else:
+            max_workspace_size = 0
+        engine = Engine(engine_path)
+        engine.build(
+            onnx_path,
+            fp16=True,
+            input_profile=input_profile,
+            enable_refit=False,
+            enable_all_tactics=False,
+            workspace_size=max_workspace_size,
+        )
+        return engine
+
+    def denoise_engine_build(self):
+        print('Start building the denoise engine for this machine.')
+        engine_path = 'engine/denoise_batch_{}.engine'.format(self.batch)
+        onnx_path = 'engine/denoise_batch_{}.onnx'.format(self.batch)
+        input_profile = {'x': [(self.batch, 4, 64, 64), (self.batch, 4, 64, 64), (self.batch, 4, 64, 64)], 'timesteps': [(self.batch,), (self.batch,), (self.batch,)], 'context': [(self.batch,77,1024), (self.batch,77,1024), (self.batch,77,1024)]}
+        self.build_engine(input_profile, onnx_path, engine_path)
+        print('Build completed successfully.')
+
     def denoise_engine_load(self):
-        self.denoise_engine = Engine('engine/denoise_batch_{}.engine'.format(self.batch))
+        engine_path = 'engine/denoise_batch_{}.engine'.format(self.batch)
+        if not os.path.exists(engine_path):
+            print('The denoise engine is not found.')
+            self.denoise_engine_build()
+        self.denoise_engine = Engine(engine_path)
         self.denoise_engine.load()
         self.denoise_engine.activate()
         self.denoise_engine.allocate_buffers(
@@ -41,8 +74,20 @@ class Generator():
             device=self.device,
         )
 
+    def decoder_engine_build(self):
+        print('Start building the decoder engine for this machine.')
+        engine_path = 'engine/decoder_batch_{}.engine'.format(self.batch)
+        onnx_path = 'engine/decoder_batch_{}.onnx'.format(self.batch)
+        input_profile = {'latent': [(self.batch, 4, 64, 64), (self.batch, 4, 64, 64), (self.batch, 4, 64, 64)]}
+        self.build_engine(input_profile, onnx_path, engine_path)
+        print('Build completed successfully.')
+
     def decoder_engine_load(self):
-        self.decoder_engine = Engine('engine/decoder_batch_{}.engine'.format(self.batch))
+        engine_path = 'engine/decoder_batch_{}.engine'.format(self.batch)
+        if not os.path.exists(engine_path):
+            print('The decoder engine is not found.')
+            self.decoder_engine_build()
+        self.decoder_engine = Engine(engine_path)
         self.decoder_engine.load()
         self.decoder_engine.activate()
         self.decoder_engine.allocate_buffers(

@@ -3,6 +3,7 @@ __pycache__
 .DS_Store
 *.safetensors
 *.engine
+*.onnx
 docs/imgs/sky
 docs/imgs/uvg
 inversion.py

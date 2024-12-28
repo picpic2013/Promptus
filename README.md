@@ -45,6 +45,7 @@ $ pip install transformers==4.37.2
 $ pip install openai-clip==1.0.1
 $ pip install scipy==1.12.0
 ```
+If you only want to experience real-time generation, please skip to the 'Real-time Demo' part.
 ### (1) Stable Diffusion Model
 Download the official SD Turbo model `'sd_turbo.safetensors'` from [here](https://huggingface.co/stabilityai/sd-turbo/tree/main), and place it in the `'checkpoints'` folder.
 ### (2) Data preparation
@@ -74,7 +75,12 @@ We provide pre-trained prompts (in 225 kbps) for `'sky'` and `'uvg'` examples, a
 ## Real-time Demo
 ### (0) Getting real-time engines
 
-We release the real-time generation engines. Please download the engines from [here](https://drive.google.com/drive/folders/1w-SWduvQ5ZZKLokae1rBXAKG10YGMQzF?usp=sharing), and place the `'denoise_batch_10.engine'` and `'decoder_batch_10.engine'` in the `'engine'` folder.
+We release the real-time generation engines. 
+
+If your GPU is an Nvidia GeForce 4090/4090D, the compatible engines can be downloaded directly. Please download the engines from [here](https://drive.google.com/drive/folders/1w-SWduvQ5ZZKLokae1rBXAKG10YGMQzF?usp=sharing), and place the `'denoise_batch_10.engine'` and `'decoder_batch_10.engine'` in the `'engine'` folder.
+
+If you use a different GPU, Promptus will automatically build engines for your machine. Please download the `'denoise_batch_10.onnx'` and `'decoder_batch_10.onnx'` files from [here](https://drive.google.com/drive/folders/1w-SWduvQ5ZZKLokae1rBXAKG10YGMQzF?usp=sharing), and place them in the `'engine'` folder.
+In this case, please wait a few minutes during the first run for the engines to be built.
 
 ### (1) Real-time generating
 We provide pre-trained prompts (in 225 kbps) for `'sky'` and `'uvg'` examples, allowing you to generate directly without training.
