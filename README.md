@@ -1,6 +1,6 @@
 # Promptus: Representing Real-World Video as Prompts for Video Streaming
 
-This is the official implementation of the paper Promptus: Can Prompts Streaming Replace Video Streaming with Stable Diffusion, which represents real-world videos with a series of "prompts" for delivery and employs Stable Diffusion to generate pixel-aligned videos at the receiver.
+This is the official implementation of the paper Promptus: Representing Real-World Video as Prompts for Video Streaming, which represents real-world videos with a series of "prompts" for delivery and employs Stable Diffusion to generate pixel-aligned videos at the receiver.
 
 ![teaser1](docs/imgs/main_pic.png)
 
@@ -92,4 +92,4 @@ the generated frames are saved in the `'data/sky/results/rank8_interval10'` fold
 
 You can also train your own videos as described above and use the generation engines for real-time generation.
 
-On a single NVIDIA GeForce 4090D, the generation speed reaches 170 FPS. The following video shows an example:
+On a single NVIDIA GeForce 4090D, the generation speed reaches 170 FPS. 
