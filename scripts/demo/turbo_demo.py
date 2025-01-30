@@ -177,7 +177,7 @@ def sample_inv(
         seed = torch.seed()
     precision_scope = autocast
     with precision_scope("cuda"):
-        c = torch.load('/home/wjk/workspace/PyProject/generative-models/c.pth')#model.conditioner(batch)
+        c = torch.load('/home/author/workspace/PyProject/generative-models/c.pth')#model.conditioner(batch)
         # c['crossattn'] = torch.randn_like(c['crossattn'])
         # c['vector'] = torch.randn_like(c['vector'])
         c['crossattn'].requires_grad = True
@@ -212,7 +212,7 @@ def sample_inv(
         loss_fn = torch.nn.MSELoss()
         # optimizer = torch.optim.Adam([c['crossattn'], c['vector'], randn], lr=0.1)
         optimizer = torch.optim.Adam([c['crossattn'], c['vector']], lr=0.1)
-        gt = torch.load('/home/wjk/workspace/PyProject/generative-models/samples_z.pth')
+        gt = torch.load('/home/author/workspace/PyProject/generative-models/samples_z.pth')
 
         for _ in range(10000):
             samples_z = sampler(denoiser, randn, cond=c, uc=uc)
@@ -248,12 +248,12 @@ def sample_inv_sd(
         seed = torch.seed()
     precision_scope = autocast
     with precision_scope("cuda"):
-        # token_embedding = torch.load('/home/wjk/workspace/PyProject/generative-models/x_token_embedding.pth')
+        # token_embedding = torch.load('/home/author/workspace/PyProject/generative-models/x_token_embedding.pth')
         # token_embedding.requires_grad = True
         # token_embedding = {'txt':token_embedding}
         # c = model.conditioner(token_embedding)
         # if False:
-        # c = torch.load('/home/wjk/workspace/PyProject/generative-models/c_sd.pth')#model.conditioner(batch)
+        # c = torch.load('/home/author/workspace/PyProject/generative-models/c_sd.pth')#model.conditioner(batch)
         # c['crossattn'] = torch.randn_like(c['crossattn'])
         # c['crossattn'].requires_grad = True
         rank = 16
@@ -271,7 +271,7 @@ def sample_inv_sd(
         sigma_2 = torch.Tensor([0.95]).float().cuda()
         # sigma_2.requires_grad = True
         # randn = seeded_randn(shape, seed)
-        #randn = (torch.load('/home/wjk/workspace/PyProject/generative-models/sky_z_1k.pth') * sigma + seeded_randn(shape, seed) * (1 - sigma))#.detach()#torch.load('/home/wjk/workspace/PyProject/generative-models/sky_z_1k.pth')
+        #randn = (torch.load('/home/author/workspace/PyProject/generative-models/sky_z_1k.pth') * sigma + seeded_randn(shape, seed) * (1 - sigma))#.detach()#torch.load('/home/author/workspace/PyProject/generative-models/sky_z_1k.pth')
         # randn.requires_grad = False
         # randn.requires_grad = True
         rand_noise = seeded_randn(shape, seed)
@@ -304,9 +304,9 @@ def sample_inv_sd(
             std = torch.std(tensor)
             return (tensor - mean) / std
 
-        # prev_frame = torch.load('/home/wjk/workspace/PyProject/generative-models/sky_z_1k.pth')
+        # prev_frame = torch.load('/home/author/workspace/PyProject/generative-models/sky_z_1k.pth')
         prev_frame = model.encode_first_stage(
-            load_img('/data/wjk/sky_timelapse/sky_train/4u-U0bOgs94/4u-U0bOgs94_1/4u-U0bOgs94_frames_00000406.jpg'))
+            load_img('/data/author/sky_timelapse/sky_train/4u-U0bOgs94/4u-U0bOgs94_1/4u-U0bOgs94_frames_00000406.jpg'))
         loss_fn = torch.nn.MSELoss()
         lpips = LearnedPerceptualImagePatchSimilarity(net_type='squeeze').cuda()
         # optimizer = torch.optim.Adam([token_embedding['txt'], randn], lr=0.1)
@@ -315,10 +315,10 @@ def sample_inv_sd(
         # optimizer = torch.optim.Adam([c['crossattn']], lr=0.1)
         optimizer = torch.optim.Adam([U, V], lr=0.1)
         # optimizer = torch.optim.Adam([U, V, sigma_1, sigma_2], lr=0.1)
-        # gt = torch.load('/home/wjk/workspace/PyProject/generative-models/samples_z.pth')
-        # gt = torch.load('/home/wjk/workspace/PyProject/generative-models/samples_x.pth')
+        # gt = torch.load('/home/author/workspace/PyProject/generative-models/samples_z.pth')
+        # gt = torch.load('/home/author/workspace/PyProject/generative-models/samples_x.pth')
         # gt = torch.clamp(gt, min=-1.0, max=1.0)
-        gt = load_img('/data/wjk/sky_timelapse/sky_train/4u-U0bOgs94/4u-U0bOgs94_1/4u-U0bOgs94_frames_00000412.jpg')
+        gt = load_img('/data/author/sky_timelapse/sky_train/4u-U0bOgs94/4u-U0bOgs94_1/4u-U0bOgs94_frames_00000412.jpg')
         gt.requires_grad = True
         min_loss = 1e9
         ckpt_prev = torch.load('result/406_rank16/ckpt.pth')
@@ -1050,12 +1050,12 @@ def sample_sd(
         seed = torch.seed()
     precision_scope = autocast
     with precision_scope("cuda"):
-        c = torch.load('/home/wjk/workspace/PyProject/generative-models/sky_c_3.4k_prev_frame.pth')
+        c = torch.load('/home/author/workspace/PyProject/generative-models/sky_c_3.4k_prev_frame.pth')
         uc = None
         sigma_1 = torch.Tensor([0.05]).float().cuda()
         sigma_2 = torch.Tensor([0.95]).float().cuda()
         rand_noise = seeded_randn(shape, seed)
-        prev_frame = torch.load('/home/wjk/workspace/PyProject/generative-models/sky_z_1k.pth')
+        prev_frame = torch.load('/home/author/workspace/PyProject/generative-models/sky_z_1k.pth')
 
         def denoiser(input, sigma, c):
             return model.denoiser(
@@ -1082,7 +1082,7 @@ def sample_sd(
 
         loss_fn = torch.nn.MSELoss()
         lpips = LearnedPerceptualImagePatchSimilarity(net_type='squeeze').cuda()
-        gt = load_img('/data/wjk/sky_timelapse/sky_train/4u-U0bOgs94/4u-U0bOgs94_1/4u-U0bOgs94_frames_00000412.jpg')
+        gt = load_img('/data/author/sky_timelapse/sky_train/4u-U0bOgs94/4u-U0bOgs94_1/4u-U0bOgs94_frames_00000412.jpg')
 
         for t in range(100):
             randn = (prev_frame * sigma_1 + rand_noise * sigma_2).detach()
@@ -1164,10 +1164,10 @@ def sample_sd_interplation(
 
         prev_frame = model.encode_first_stage(
             load_img(
-                '/data/wph/N3DV_dataset/frame_coffee_martini/0000/images/cam00.png'))  # torch.load('/home/wjk/workspace/PyProject/generative-models/sky_z_1k.pth')
+                '/data/wph/N3DV_dataset/frame_coffee_martini/0000/images/cam00.png'))  # torch.load('/home/author/workspace/PyProject/generative-models/sky_z_1k.pth')
         loss_fn = torch.nn.MSELoss()
         lpips = LearnedPerceptualImagePatchSimilarity(net_type='squeeze').cuda()
-        gt = load_img('/data/wph/N3DV_dataset/frame_coffee_martini/{:04d}/images/cam00.png'.format(0))#load_img('/data/wjk/sky_timelapse/sky_train/4u-U0bOgs94/4u-U0bOgs94_1/4u-U0bOgs94_frames_00000412.jpg')
+        gt = load_img('/data/wph/N3DV_dataset/frame_coffee_martini/{:04d}/images/cam00.png'.format(0))#load_img('/data/author/sky_timelapse/sky_train/4u-U0bOgs94/4u-U0bOgs94_1/4u-U0bOgs94_frames_00000412.jpg')
         ckpt1 = torch.load('tmp/0001_our_lpips_mse_[-1,1]_0.2_0.8_8bits_rank8/ckpt.pth')#torch.load('result/406_rank16/ckpt.pth')
         ckpt2 = torch.load('tmp/0005_our_lpips_mse_[-1,1]_0.2_0.8_8bits_rank8/ckpt.pth')#torch.load('result/412_rank16/ckpt.pth')
         U1, V1, U2, V2 = ckpt1['U'], ckpt1['V'], ckpt2['U'], ckpt2['V']
@@ -1250,7 +1250,7 @@ def sample_sd_c(
 
         # prev_frame = model.encode_first_stage(
         #     load_img(
-        #         '/data/wph/N3DV_dataset/frame_coffee_martini/0000/images/cam00.png'))  # torch.load('/home/wjk/workspace/PyProject/generative-models/sky_z_1k.pth')
+        #         '/data/wph/N3DV_dataset/frame_coffee_martini/0000/images/cam00.png'))  # torch.load('/home/author/workspace/PyProject/generative-models/sky_z_1k.pth')
         loss_mse = torch.nn.MSELoss()
         loss_lpips = LearnedPerceptualImagePatchSimilarity(net_type='vgg').cuda()
         # mse = []

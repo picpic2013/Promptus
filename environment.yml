@@ -182,4 +182,3 @@ dependencies:
       - wcwidth==0.2.13
       - yarl==1.18.3
       - zipp==3.21.0
-prefix: /home/wjk/.conda/envs/promptus

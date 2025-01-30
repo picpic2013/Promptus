@@ -1,6 +1,6 @@
 # Promptus: Representing Real-World Video as Prompts for Video Streaming
 
-This is the official implementation of the paper [Promptus: Can Prompts Streaming Replace Video Streaming with Stable Diffusion](https://arxiv.org/abs/2405.20032), which represents real-world videos with a series of "prompts" for delivery and employs Stable Diffusion to generate pixel-aligned videos at the receiver.
+This is the official implementation of the paper Promptus: Can Prompts Streaming Replace Video Streaming with Stable Diffusion, which represents real-world videos with a series of "prompts" for delivery and employs Stable Diffusion to generate pixel-aligned videos at the receiver.
 
 ![teaser1](docs/imgs/main_pic.png)
 
@@ -93,57 +93,3 @@ the generated frames are saved in the `'data/sky/results/rank8_interval10'` fold
 You can also train your own videos as described above and use the generation engines for real-time generation.
 
 On a single NVIDIA GeForce 4090D, the generation speed reaches 170 FPS. The following video shows an example:
-
-<div style="text-align: center;">
-  <img src="docs/imgs/Real-time.gif" width="960">
-  <strong><p>Real-time Demo</strong></p>
-</div>
-
-## Integrated into browsers and video streaming platforms
-
-Promptus is integrated into a browser-side video streaming platform: [Puffer](https://github.com/StanfordSNR/puffer).
-
-### Media Server
-Within the media server, we replace `'video chunks'` with `'inverse prompts'`.
-Inverse prompts have multiple bitrate levels and are requested by the browser client.
-
-### Browser Player
-At the client, the received prompts are forwarded to the Promptus process. Within the Promptus process, the real-time engine and a GPU are invoked to generate videos. The generated videos are played via the browser's Media Source Extensions (MSE).
-
-The following video shows an example:
-
-<div style="text-align: center;">
-  <img src="docs/imgs/Browser.gif" width="960">
-  <strong><p>Promptus in Browser-side Video Streaming</strong></p>
-</div>
-
-&nbsp;
-
-*To start, it is recommended to run the Real-time Demo with the pre-trained prompts, as it is the simplest way to experience Promptus.
-
-*The inversion code will be open-sourced after publication. If needed, please apply via email at `jiangkai.wu@stu.pku.edu.cn`. We welcome collaboration : )
-
-## Acknowledgement
-Promptus is built based on these repositories:
-
-[pytorch-quantization-demo](https://github.com/Jermmy/pytorch-quantization-demo) ![GitHub stars](https://img.shields.io/github/stars/Jermmy/pytorch-quantization-demo.svg?style=flat&label=Star)
-
-[generative-models](https://github.com/Stability-AI/generative-models) ![GitHub stars](https://img.shields.io/github/stars/Stability-AI/generative-models.svg?style=flat&label=Star)
-
-[StreamDiffusion](https://github.com/cumulo-autumn/StreamDiffusion) ![GitHub stars](https://img.shields.io/github/stars/cumulo-autumn/StreamDiffusion.svg?style=flat&label=Star)
-
-[DiffDVR](https://github.com/shamanDevel/DiffDVR) ![GitHub stars](https://img.shields.io/github/stars/shamanDevel/DiffDVR.svg?style=flat&label=Star)
-
-[taesd](https://github.com/madebyollin/taesd) ![GitHub stars](https://img.shields.io/github/stars/madebyollin/taesd.svg?style=flat&label=Star)
-
-[puffer](https://github.com/StanfordSNR/puffer) ![GitHub stars](https://img.shields.io/github/stars/StanfordSNR/puffer.svg?style=flat&label=Star)
-
-## Citation
-```
-@article{wu2024promptus,
-  title={Promptus: Can Prompts Streaming Replace Video Streaming with Stable Diffusion},
-  author={Wu, Jiangkai and Liu, Liming and Tan, Yunpeng and Hao, Junlin and Zhang, Xinggong},
-  journal={arXiv preprint arXiv:2405.20032},
-  year={2024}
-}
-```
