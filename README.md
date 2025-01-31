@@ -77,9 +77,9 @@ We provide pre-trained prompts (in 225 kbps) for `'sky'` and `'uvg'` examples, a
 
 We release the real-time generation engines. 
 
-If your GPU is an Nvidia GeForce 4090/4090D, the compatible engines can be downloaded directly. Please download the engines from [here](https://drive.google.com/drive/folders/1w-SWduvQ5ZZKLokae1rBXAKG10YGMQzF?usp=sharing), and place the `'denoise_batch_10.engine'` and `'decoder_batch_10.engine'` in the `'engine'` folder.
+If your GPU is an Nvidia GeForce 4090D, the compatible engines can be downloaded directly. Please download the engines from [here](https://drive.google.com/drive/folders/1s59OH-dFvJDw7GbdMCw3CZ2mFdwcczin), and place the `'denoise_batch_10.engine'` and `'decoder_batch_10.engine'` in the `'engine'` folder.
 
-If you use a different GPU, Promptus will automatically build engines for your machine. Please download the `'denoise_batch_10.onnx'` and `'decoder_batch_10.onnx'` files from [here](https://drive.google.com/drive/folders/1w-SWduvQ5ZZKLokae1rBXAKG10YGMQzF?usp=sharing), and place them in the `'engine'` folder.
+If you use a different GPU, Promptus will automatically build engines for your machine. Please download the `'denoise_batch_10.onnx'` and `'decoder_batch_10.onnx'` files from [here](https://drive.google.com/drive/folders/1s59OH-dFvJDw7GbdMCw3CZ2mFdwcczin), and place them in the `'engine'` folder.
 In this case, please wait a few minutes during the first run for the engines to be built.
 
 ### (1) Real-time generating
